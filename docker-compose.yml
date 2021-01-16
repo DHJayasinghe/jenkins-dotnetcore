@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  cicd_pipeline:
+    # image: jenkins/jenkins:lts-alpine
+    image: ${DOCKER_REGISTRY-}jenkins
+    container_name: cicd_pipeline
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - type: bind
+        source: C:\Docker_Volumes\jenkins_home
+        target: /var/jenkins_home
+    ports: 
+      - 8888:8080
+      - 50000:50000
+    restart: always
