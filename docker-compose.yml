@@ -15,4 +15,28 @@ services:
     ports: 
       - 8888:8080
       - 50000:50000
+    networks: 
+      - test-environment
     restart: always
+
+  rabbitmq_testenv:
+    image: rabbitmq:3-alpine
+    container_name: rabbitmq_testenv
+    networks: 
+      - test-environment
+    restart: always
+
+  sqlserver_testenv:
+    container_name: sqlserver_testenv
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Admin@#123
+      - MSSQL_PID=Express
+    networks: 
+      - test-environment
+    restart: always
+
+networks: 
+  test-environment:
+    driver: bridge
